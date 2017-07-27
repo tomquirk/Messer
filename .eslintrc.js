@@ -1,7 +1,7 @@
 module.exports = {
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
     },
     "extends": "eslint:recommended",
     "parserOptions": {
@@ -10,7 +10,10 @@ module.exports = {
     "rules": {
         "indent": [
             "error",
-            "tab"
+            "tab",
+            {
+                "SwitchCase": 1
+            }
         ],
         "linebreak-style": [
             "error",

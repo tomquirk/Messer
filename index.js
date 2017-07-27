@@ -1,9 +1,11 @@
 #!/usr/bin/env node
+
 "use strict"
 
 /* Imports */
 const repl = require("repl")
 const facebook = require("facebook-chat-api")
+const readline = require("readline")
 
 /* Globals */
 let api = {}
@@ -44,7 +46,9 @@ if (process.argv.length < 3) {
 		name: "password",
 		hidden: true,
 		conform: () => true
-	}], (err, result) => { authenticate(result) })
+	}], (err, result) => {
+		authenticate(result)
+	})
 
 } else {
 	const fs = require("fs")
@@ -106,7 +110,7 @@ function handleMessage(message) {
 	if (message.participantNames && message.participantNames.length > 1)
 		sender = `'${sender}' (${message.senderName})`
 
-	process.stderr.write("\x07")	// Terminal notification
+	process.stderr.write("\x07") // Terminal notification
 
 	let messageBody = null
 
@@ -133,9 +137,9 @@ function handleMessage(message) {
 
 /* command handlers */
 const commands = {
-  /**
-   * Sends message to given user
-   */
+	/**
+	 * Sends message to given user
+	 */
 	[commandEnum.MESSAGE](rawCommand) {
 		const quoteReg = /(".*?")(.*)/g
 		// to get length of first arg
@@ -173,9 +177,9 @@ const commands = {
 		})
 	},
 
-  /**
-   * Replies with a given message to the last received thread.
-   */
+	/**
+	 * Replies with a given message to the last received thread.
+	 */
 	[commandEnum.REPLY](rawCommand) {
 		if (lastThread === null) {
 			return console.warn("Error - can't reply to messages you haven't yet received! You need to receive a message before using `reply`!")
@@ -193,16 +197,18 @@ const commands = {
 		})
 	},
 
-  /**
-   * Displays users friend list
-   */
+	/**
+	 * Displays users friend list
+	 */
 	[commandEnum.CONTACTS]() {
 		if (user.friendsList.length === 0) {
 			console.log("You have no friends :cry:")
 		}
-		user.friendsList.forEach(f => { console.log(f.fullName) })
+		user.friendsList.forEach(f => {
+			console.log(f.fullName)
+		})
 	},
-	
+
 	/**
 	 * Displays usage instructions
 	 */
@@ -215,8 +221,8 @@ const commands = {
 	},
 
 	/**
-	* Retrieves last n messages from specified friend
-	*/
+	 * Retrieves last n messages from specified friend
+	 */
 	[commandEnum.READ](rawCommand) {
 		const quoteReg = /(".*?")(.*)/g
 		// to get length of first arg
@@ -248,10 +254,12 @@ const commands = {
 
 		api.getThreadHistory(receiver.userID, messageCount, undefined, (err, history) => {
 			if (err) return console.log("ERROR:", err.error)
-			history.forEach(cv => { console.log(`${cv.senderName}: ${cv.body}`) })
+			history.forEach(cv => {
+				console.log(`${cv.senderName}: ${cv.body}`)
+			})
 		})
 	},
-	
+
 }
 
 /**
@@ -273,11 +281,31 @@ function processCommand(rawCommand) {
 }
 
 function authenticate(credentials) {
-	facebook(credentials, (err, fbApi) => {
-		if (err) return
+
+	const rl = readline.createInterface({
+		input: process.stdin,
+		output: process.stdout
+	})
+
+	facebook(credentials, {
+		forceLogin: true
+	}, (err, fbApi) => {
+		switch (err.error) {
+			case "login-approval":
+				console.log("Enter authentication code > ")
+				rl.on("line", (line) => {
+					err.continue(line)
+					rl.close()
+				})
+				break
+			case "review-recent-login":
+				return console.log("Facebook thinks you're a hacker...Check facebook in the browser")
+		}
 
 		api = fbApi // assign to global variable
-		api.setOptions({ logLevel: "silent" })
+		api.setOptions({
+			logLevel: "silent"
+		})
 
 		console.info(`Logged in as ${credentials.email}`)
 
