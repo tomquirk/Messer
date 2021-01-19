@@ -40,7 +40,7 @@ const getMesserKeyPair = () => {
   return { publicKey, privateKey };
 };
 
-const getOrCreateMesserKeyPair = () => {
+const getOrCreateZuccnetKeyPair = () => {
   let { privateKey, publicKey } = getMesserKeyPair();
   if (privateKey && publicKey) {
     return { privateKey, publicKey };
@@ -73,7 +73,7 @@ const encryptMessage = (message, recipientPublicKey) => {
  */
 const decryptMessage = encryptedMessage => {
   const encryptedMessageBuffer = Buffer.from(encryptedMessage, "base64");
-  const { privateKey } = getOrCreateMesserKeyPair();
+  const { privateKey } = getOrCreateZuccnetKeyPair();
   const message = crypto.privateDecrypt(
     {
       key: privateKey,
@@ -87,6 +87,7 @@ const decryptMessage = encryptedMessage => {
 };
 
 module.exports = {
+  getOrCreateZuccnetKeyPair,
   encryptMessage,
   decryptMessage,
 };

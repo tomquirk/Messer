@@ -5,7 +5,17 @@ End-to-end Encrypted Facebook Messenger
 ![Version](https://img.shields.io/npm/v/zuccnet.svg)
 ![License](https://img.shields.io/npm/l/zuccnet.svg)
 
-Zuccnet is a fork of [https://github.com/mjkaufer/messer](messer), a command-line client for Facebook Messenger.
+Zuccnet is a fork of [https://github.com/mjkaufer/messer](messer), a command-line client for Facebook Messenger. Only difference is, Facebook can't read your messages.
+
+It is known that [Facebook scans your messages](https://www.digitaltrends.com/social-media/facebook-reads-messenger-messages/). If you need to keep using Facebook messenger but care about privacy, Zuccnet might help.
+
+It's pretty simple: you and your friend have Zuccnet installed. Your friend gives you their Zuccnet public key. Then, when you send a message to your friend on Zuccnet, your message is encrypted on your machine before it is sent across Facebook to your friend. Then, your friend's Zuccnet decrypts the message. Facebook never sees the content of your message.
+
+I'm not a security person and there's probably some stuff I've missed - any contributions are very welcome! This is _very_ **beta**, don't take it too seriously.
+
+| What your friend sees              | What Facebook sees     |
+| ---------------------------------- | ---------------------- |
+| ![terminal](./assets/terminal.png) | ![fb](./assets/fb.png) |
 
 ## Quick Start
 
@@ -27,18 +37,17 @@ Zuccnet is a fork of [https://github.com/mjkaufer/messer](messer), a command-lin
 
 4. Get your friend's public key, and assign it to them in Zuccnet
 
-```bash
-$ public_key "John Smith" /Users/tomquirk/Downloads/johns_id_rsa.pub
-```
+   ```bash
+   $ public_key "John Smith" /Users/tomquirk/Downloads/johns_id_rsa.pub
+   ```
 
 5. Send them a message
 
-```
-$ message "John Smith" Hey John, this is a super secret message
-```
+   ```
+   $ message "John Smith" Hey John, this is a super secret message
+   ```
 
 6. 🪄
-
 
 ## FAQ
 

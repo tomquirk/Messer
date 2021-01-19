@@ -5,6 +5,7 @@ const settings = require("./settings");
 const helpers = require("../util/helpers");
 const lock = require("./lock");
 const { loadPublicKeys } = require("./public_keys");
+const { getOrCreateZuccnetKeyPair } = require("../util/crypto");
 const messageEventHandler = require("../event-handlers/message");
 const eventEventHandler = require("../event-handlers/event");
 
@@ -93,6 +94,7 @@ Messer.prototype.start = function start(interactive = true, rawCommand) {
   return this.messen
     .login()
     .then(() => {
+      getOrCreateZuccnetKeyPair();
       return loadPublicKeys(this.messen);
     })
     .then(() => {
