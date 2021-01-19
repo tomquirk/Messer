@@ -2,32 +2,42 @@
 
 End-to-end Encrypted Facebook Messenger
 
-![Downloads](https://img.shields.io/npm/dm/zuccnet.svg)
 ![Version](https://img.shields.io/npm/v/zuccnet.svg)
 ![License](https://img.shields.io/npm/l/zuccnet.svg)
 
-Zuccnet is a fork of []
-
-![demo](./assets/zuccnet_cli_demo.gif)
-
-## Installation
-
-```bash
-$ npm install -g zuccnet
-```
+Zuccnet is a fork of [https://github.com/mjkaufer/messer](messer), a command-line client for Facebook Messenger.
 
 ## Quick Start
 
 > `node` version 12.x required
 
 1. Install `zuccnet`
+
+   ```bash
+   $ npm install -g zuccnet
+   ```
+
 2. Run `zuccnet`
 
    ```bash
    $ zuccnet
    ```
 
-3. Enter your login details (don't worry, we don't store a thing)
+3. Enter your login details (your username and password are not stored)
+
+4. Get your friend's public key, and assign it to them in Zuccnet
+
+```bash
+$ public_key "John Smith" /Users/tomquirk/Downloads/johns_id_rsa.pub
+```
+
+5. Send them a message
+
+```
+$ message "John Smith" Hey John, this is a super secret message
+```
+
+6. 🪄
 
 
 ## FAQ
