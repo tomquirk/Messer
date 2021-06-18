@@ -5,7 +5,7 @@ End-to-end Encrypted Facebook Messenger
 ![Version](https://img.shields.io/npm/v/zuccnet.svg)
 ![License](https://img.shields.io/npm/l/zuccnet.svg)
 
-Zuccnet is a fork of [https://github.com/mjkaufer/messer](messer), a command-line client for Facebook Messenger. Only difference is, Facebook can't read your messages.
+Zuccnet is a fork of https://github.com/mjkaufer/messer, a command-line client for Facebook Messenger. Only difference is, Facebook can't read your messages.
 
 It is known that [Facebook scans your messages](https://www.digitaltrends.com/social-media/facebook-reads-messenger-messages/). If you need to keep using Facebook messenger but care about privacy, Zuccnet might help.
 
